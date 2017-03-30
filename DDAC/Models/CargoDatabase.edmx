@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DDACModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CargoName" Type="varchar" MaxLength="50" />
+          <Property Name="CargoWidth" Type="int" />
+          <Property Name="CargoLength" Type="int" />
+          <Property Name="CargoHeight" Type="int" />
+          <Property Name="CargoWeight" Type="int" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="WarehouseId" Type="int" />
+          <Property Name="CargoRequirement" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CargoBooking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="int" Nullable="false" />
+          <Property Name="CargoId" Type="int" />
+          <Property Name="AgentName" Type="varchar" MaxLength="50" />
+          <Property Name="ShipID" Type="int" />
+          <Property Name="DepartDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+          <Property Name="Contact" Type="nchar" MaxLength="10" />
+          <Property Name="Gender" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Shiptransaction">
+          <Key>
+            <PropertyRef Name="ShipId" />
+          </Key>
+          <Property Name="ShipId" Type="int" Nullable="false" />
+          <Property Name="ShipName" Type="varchar" MaxLength="50" />
+          <Property Name="DepartLocation" Type="varchar" MaxLength="50" />
+          <Property Name="DestinationLocation" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WarehouseId" />
+          </Key>
+          <Property Name="WarehouseId" Type="int" Nullable="false" />
+          <Property Name="WarehouseName" Type="varchar" MaxLength="50" />
+          <Property Name="WarehouseAddress" Type="varchar" MaxLength="50" />
+          <Property Name="WarehouseCapacity" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Cargo_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cargo_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CargoBooking_Cargo">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="0..1" />
+          <End Role="CargoBooking" Type="Self.CargoBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CargoBooking">
+              <PropertyRef Name="CargoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CargoBooking_Ship">
+          <End Role="Shiptransaction" Type="Self.Shiptransaction" Multiplicity="0..1" />
+          <End Role="CargoBooking" Type="Self.CargoBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shiptransaction">
+              <PropertyRef Name="ShipId" />
+            </Principal>
+            <Dependent Role="CargoBooking">
+              <PropertyRef Name="ShipID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DDACModelStoreContainer">
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CargoBooking" EntityType="Self.CargoBooking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shiptransaction" EntityType="Self.Shiptransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cargo_Customer" Association="Self.FK_Cargo_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cargo_Warehouse" Association="Self.FK_Cargo_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CargoBooking_Cargo" Association="Self.FK_CargoBooking_Cargo">
+            <End Role="Cargo" EntitySet="Cargo" />
+            <End Role="CargoBooking" EntitySet="CargoBooking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CargoBooking_Ship" Association="Self.FK_CargoBooking_Ship">
+            <End Role="Shiptransaction" EntitySet="Shiptransaction" />
+            <End Role="CargoBooking" EntitySet="CargoBooking" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DDACModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CargoName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CargoWidth" Type="Int32" />
+          <Property Name="CargoLength" Type="Int32" />
+          <Property Name="CargoHeight" Type="Int32" />
+          <Property Name="CargoWeight" Type="Int32" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="CargoRequirement" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Cargo_Customer" FromRole="Cargo" ToRole="Customer" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_Cargo_Warehouse" FromRole="Cargo" ToRole="Warehouse" />
+          <NavigationProperty Name="CargoBookings" Relationship="Self.FK_CargoBooking_Cargo" FromRole="Cargo" ToRole="CargoBooking" />
+        </EntityType>
+        <EntityType Name="CargoBooking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="Int32" Nullable="false" />
+          <Property Name="CargoId" Type="Int32" />
+          <Property Name="AgentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ShipID" Type="Int32" />
+          <Property Name="DepartDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Cargo" Relationship="Self.FK_CargoBooking_Cargo" FromRole="CargoBooking" ToRole="Cargo" />
+          <NavigationProperty Name="Shiptransaction" Relationship="Self.FK_CargoBooking_Ship" FromRole="CargoBooking" ToRole="Shiptransaction" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Cargoes" Relationship="Self.FK_Cargo_Customer" FromRole="Customer" ToRole="Cargo" />
+        </EntityType>
+        <EntityType Name="Shiptransaction">
+          <Key>
+            <PropertyRef Name="ShipId" />
+          </Key>
+          <Property Name="ShipId" Type="Int32" Nullable="false" />
+          <Property Name="ShipName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DestinationLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CargoBookings" Relationship="Self.FK_CargoBooking_Ship" FromRole="Shiptransaction" ToRole="CargoBooking" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WarehouseId" />
+          </Key>
+          <Property Name="WarehouseId" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WarehouseAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WarehouseCapacity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cargoes" Relationship="Self.FK_Cargo_Warehouse" FromRole="Warehouse" ToRole="Cargo" />
+        </EntityType>
+        <Association Name="FK_Cargo_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cargo_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CargoBooking_Cargo">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="0..1" />
+          <End Role="CargoBooking" Type="Self.CargoBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CargoBooking">
+              <PropertyRef Name="CargoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CargoBooking_Ship">
+          <End Role="Shiptransaction" Type="Self.Shiptransaction" Multiplicity="0..1" />
+          <End Role="CargoBooking" Type="Self.CargoBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shiptransaction">
+              <PropertyRef Name="ShipId" />
+            </Principal>
+            <Dependent Role="CargoBooking">
+              <PropertyRef Name="ShipID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DDACEntities5" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cargoes" EntityType="Self.Cargo" />
+          <EntitySet Name="CargoBookings" EntityType="Self.CargoBooking" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Shiptransactions" EntityType="Self.Shiptransaction" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
+          <AssociationSet Name="FK_Cargo_Customer" Association="Self.FK_Cargo_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Cargo" EntitySet="Cargoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cargo_Warehouse" Association="Self.FK_Cargo_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Cargo" EntitySet="Cargoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CargoBooking_Cargo" Association="Self.FK_CargoBooking_Cargo">
+            <End Role="Cargo" EntitySet="Cargoes" />
+            <End Role="CargoBooking" EntitySet="CargoBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CargoBooking_Ship" Association="Self.FK_CargoBooking_Ship">
+            <End Role="Shiptransaction" EntitySet="Shiptransactions" />
+            <End Role="CargoBooking" EntitySet="CargoBookings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DDACModelStoreContainer" CdmEntityContainer="DDACEntities5">
+          <EntitySetMapping Name="Cargoes">
+            <EntityTypeMapping TypeName="DDACModel.Cargo">
+              <MappingFragment StoreEntitySet="Cargo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CargoName" ColumnName="CargoName" />
+                <ScalarProperty Name="CargoWidth" ColumnName="CargoWidth" />
+                <ScalarProperty Name="CargoLength" ColumnName="CargoLength" />
+                <ScalarProperty Name="CargoHeight" ColumnName="CargoHeight" />
+                <ScalarProperty Name="CargoWeight" ColumnName="CargoWeight" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="CargoRequirement" ColumnName="CargoRequirement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CargoBookings">
+            <EntityTypeMapping TypeName="DDACModel.CargoBooking">
+              <MappingFragment StoreEntitySet="CargoBooking">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="CargoId" ColumnName="CargoId" />
+                <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+                <ScalarProperty Name="ShipID" ColumnName="ShipID" />
+                <ScalarProperty Name="DepartDate" ColumnName="DepartDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="DDACModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shiptransactions">
+            <EntityTypeMapping TypeName="DDACModel.Shiptransaction">
+              <MappingFragment StoreEntitySet="Shiptransaction">
+                <ScalarProperty Name="ShipId" ColumnName="ShipId" />
+                <ScalarProperty Name="ShipName" ColumnName="ShipName" />
+                <ScalarProperty Name="DepartLocation" ColumnName="DepartLocation" />
+                <ScalarProperty Name="DestinationLocation" ColumnName="DestinationLocation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="DDACModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="WarehouseAddress" ColumnName="WarehouseAddress" />
+                <ScalarProperty Name="WarehouseCapacity" ColumnName="WarehouseCapacity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

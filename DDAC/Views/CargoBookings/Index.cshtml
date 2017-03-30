@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DDAC.Models.CargoBooking>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AgentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cargo.CargoName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shiptransaction.ShipName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cargo.CargoName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shiptransaction.ShipName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BookingId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BookingId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BookingId })
+        </td>
+    </tr>
+}
+
+</table>

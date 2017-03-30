@@ -1,0 +1,50 @@
+﻿@model DDAC.Models.CargoBooking
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CargoBooking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AgentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AgentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cargo.CargoName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cargo.CargoName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Shiptransaction.ShipName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Shiptransaction.ShipName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BookingId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

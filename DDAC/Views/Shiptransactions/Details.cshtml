@@ -1,0 +1,42 @@
+﻿@model DDAC.Models.Shiptransaction
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Shiptransaction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DestinationLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DestinationLocation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ShipId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

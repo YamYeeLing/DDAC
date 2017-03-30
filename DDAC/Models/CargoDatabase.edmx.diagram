@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f6bbf94f7b5f46778f382f1f493fc56d" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="DDACModel.Cargo" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DDACModel.CargoBooking" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DDACModel.Customer" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DDACModel.Shiptransaction" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DDACModel.Warehouse" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <AssociationConnector Association="DDACModel.FK_Cargo_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="DDACModel.FK_Cargo_Warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="DDACModel.FK_CargoBooking_Cargo" ManuallyRouted="false" />
+        <AssociationConnector Association="DDACModel.FK_CargoBooking_Ship" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
